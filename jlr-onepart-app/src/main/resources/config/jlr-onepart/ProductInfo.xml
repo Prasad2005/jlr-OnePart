@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProductInfo>
+    <name>${project.name}</name>
+    <version>${project.version}</version>
+    <revision>${buildNumber}</revision>
+    <date>${timestamp}</date>
+</ProductInfo>

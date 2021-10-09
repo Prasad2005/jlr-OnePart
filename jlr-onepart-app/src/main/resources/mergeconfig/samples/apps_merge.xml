@@ -1,0 +1,10 @@
+<GenericElementsMerger xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="../xsd/GenericElementsMergerConfig.xsd">
+    <genericElements>
+        <!-- Exclude by default applications templates from target package -->
+        <genericElement mode="ignore" name="[a-z]+_template"/>
+        <genericElement mode="ignore" name="undefined_appid"/>
+        <!-- Exclude source application from target package (can be useful to extend an application without modifying it's configuration -->
+        <!-- <genericElement mode="ignore" name="[APP_NAME]"/> -->
+    </genericElements>
+</GenericElementsMerger>

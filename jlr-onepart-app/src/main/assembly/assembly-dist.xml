@@ -1,0 +1,90 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 
+   http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+	<id>distribution</id>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<files>
+		<file>
+			<source>target/cvapps.properties</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		<!-- APP POM -->
+		<file>
+			<source>pom.xml</source>
+			<outputDirectory>/maven</outputDirectory>
+		</file>
+		<!-- APP Assembly -->
+		<file>
+            <source>src/main/assembly/assembly-dist.xml</source>
+            <outputDirectory>/maven/jlr-onepart-app</outputDirectory>
+			<filtered>true</filtered>
+        </file>
+	</files>
+	<fileSets>
+		<fileSet>
+			<directory>target/config</directory>
+			<outputDirectory>config</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/javabin</directory>
+			<outputDirectory>javabin</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/webapps</directory>
+			<outputDirectory>webapps</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/documents</directory>
+			<outputDirectory>documents</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>target/documents</directory>
+			<outputDirectory>documents</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>target/cv_app_resources/resources</directory>
+			<outputDirectory>resources</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>target/site</directory>
+			<outputDirectory>documents</outputDirectory>
+			<includes>
+				<include>**/*.pdf</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<unpack>false</unpack>
+			<outputDirectory>plugins</outputDirectory>
+			<includes>
+				<include>${project.groupId}:jlr-onepart-core</include>
+				<include>com.exalead.custom:CustomCVCoreComponents</include>
+			</includes>
+			<excludes>
+            	<!-- Exclude jar dependencies of plugins (included in zip file) -->
+            	<exclude>*:*:jar</exclude>
+            </excludes>
+		</dependencySet>
+		<dependencySet>
+			<unpack>false</unpack>
+			<outputDirectory>360-plugins/default</outputDirectory>
+			<includes>
+				<include>com.exalead.custom:CustomAccessComponents</include>
+				<include>${project.groupId}:jlr-onepart-access</include>
+				<include>${project.groupId}:jlr-onepart-ui</include>
+				<!-- <include>com.exalead.apps:*</include> -->
+			</includes>
+			<excludes>
+            	<!-- Exclude jar dependencies of plugins (included in zip file) -->
+            	<exclude>*:*:jar</exclude>
+            </excludes>
+		</dependencySet>
+	</dependencySets>
+</assembly>

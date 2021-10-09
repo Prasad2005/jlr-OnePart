@@ -1,0 +1,85 @@
+image: "maven:3.8.1-jdk-11"
+
+variables:
+  # If Maven settings is present in '.m2' folder of the project, not really recomended to use this approach
+  # but use FILE environment variable of Gitlab CI/CD configuration
+  # For example let's use in this file 'MVN_EXA_SETTINGS' Maven settings file variable...
+  # MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  # Fastest build (skip reports and tests, profile can be adjusted to generate some reports for each build and test activated)
+  MAVEN_SKIP_OPTS: "-P skip_reports -Dresume=false -Dmaven.test.skip=true"
+
+cache:
+  key: mavenrepo
+  paths:
+    - .m2/repository
+
+stages:
+  - deploy
+  - release
+
+deploy:
+  # To be configured or deleted (for example if kubernetes is default runner)...
+  #tags:
+    #- runner_tag
+  stage: deploy
+  script:
+    # If settings file present in project
+    #- mvn $MAVEN_CLI_OPTS deploy
+    # Using 'MVN_EXA_SETTINGS' Maven settings file variable...
+    - mvn -s $MVN_EXA_SETTINGS deploy $MAVEN_SKIP_OPTS $MAVEN_OPTS
+    # Add pipeline ID as build number variable...
+    #- mvn -s $MVN_EXA_SETTINGS deploy $MAVEN_SKIP_OPTS $MAVEN_OPTS -DbuildNumber=$CI_PIPELINE_ID
+  only:
+    - master    
+
+# Supplies the option to perform Maven releases from the master branch.
+# Releases need to be triggered manually in the GitLab CI/CD pipeline.
+master-release:
+  stage: release
+  when: manual
+  # To be configured or deleted...
+  #tags:
+    #- runner_tag
+  script:
+    ## Run ssh-agent (inside the build environment)
+    - eval $(ssh-agent -s)
+    ## Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    ## We're using tr to fix line endings which makes ed25519 keys work
+    ## without extra base64 encoding.
+    ## https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    ## Create the SSH directory and give it the right permissions
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - git config --global user.name "$GITLAB_USER_NAME"
+    - git config --global http.sslverify false
+    - 'export GIT_TRACING=2'
+    - 'export GIT_CURL_VERBOSE=1'
+    # Get current project SNAPSHOT version
+    - export CURRENT_VERSION=$(mvn -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec -q)
+    - 'echo "Current project version: $CURRENT_VERSION"'
+   
+   # For Docker builds disable host key checking. Be aware that by adding that
+    # you are susceptible to man-in-the-middle attacks.
+    # WARNING: Use this only with the Docker executor, if you use it with shell
+    # you will overwrite your user's SSH config.
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    # Checkout explicitly branch master (doesn't work with Maven release plugin if not)
+    - 'git checkout master'
+    - git remote set-url origin $(echo $CI_REPOSITORY_URL | sed -e 's/[^@]\+@\([^\/]\+\)\//git@\1\:/')
+    # Create release
+    # Using explicit release version number
+    #- 'mvn -s $MVN_EXA_SETTINGS $MAVEN_SKIP_OPTS -DreleaseVersion=$RELEASE_VERSION release:prepare release:perform'
+    # Automatic release version and new snapshot version
+    - git reset --hard origin/master
+    - git status
+    - git branch
+    - git remote -v
+    - mvn -s $MVN_EXA_SETTINGS $MAVEN_SKIP_OPTS clean -DreleaseVersion=$RELEASE_VERSION release:prepare
+    - mvn -s $MVN_EXA_SETTINGS $MAVEN_SKIP_OPTS release:perform -Dgoals="deploy"
+  #- 'echo Gitlab CI repository URL: $CI_REPOSITORY_URL'
+    # Remove '-SNAPSHOT' suffix (can be useful for non conform version to force release version in Maven release goal, for example 'V6R2020x.R0')
+    - export CURRENT_VERSION=$(mvn -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec -q)
+    - 'echo "Current project version: $CURRENT_VERSION"'

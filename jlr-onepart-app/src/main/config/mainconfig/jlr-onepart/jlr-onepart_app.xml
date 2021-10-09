@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ApplicationsConfig >
+	<application>
+        <name>jlr-onepart</name>
+		<properties>
+            <property>
+				<name>prop_name</name>
+                <value>${PROP_NAME}</value>
+            </property>
+        </properties>
+        <facetDisplays>
+	        <facetDisplay id="current">
+				<icon>fonticon-cog</icon>
+	        	<categoryDisplay id="Create">
+	        		<color>#FEE000</color>
+	        		<icon>fonticon-plus</icon>
+	        	</categoryDisplay>
+	        	<categoryDisplay id="Active">
+	        		<color>#009DDB</color>
+	        		<icon>fonticon-mouse-pointer-check</icon>
+	        	</categoryDisplay>
+	        	<categoryDisplay id="Assign">
+	        		<color>#FF8A2E</color>
+	        		<icon>fonticon-user-check</icon>
+	        	</categoryDisplay>
+	        	<categoryDisplay id="Review">
+	        		<color>#9B2C98</color>
+	        		<icon>fonticon-eye</icon>
+	        	</categoryDisplay>
+	        	<categoryDisplay id="Closed">
+	        		<color>#00AA86</color>
+	        		<icon>fonticon-archive</icon>
+	        	</categoryDisplay>
+	        </facetDisplay>
+			<facetDisplay id="numopeneddays">
+				<icon>fonticon-clock</icon>
+			</facetDisplay>
+			<facetDisplay id="issue_to_assigned_issue">
+				<icon>fonticon-users</icon>
+			</facetDisplay>
+			<facetDisplay id="owner">
+				<icon>fonticon-users</icon>
+			</facetDisplay>
+			<facetDisplay id="priority">
+				<icon>fonticon-medium</icon>
+	        </facetDisplay>
+			<facetDisplay id="issue_problem_type">
+				<icon>fonticon-tools</icon>
+			</facetDisplay>
+        </facetDisplays>
+    </application>
+</ApplicationsConfig> 

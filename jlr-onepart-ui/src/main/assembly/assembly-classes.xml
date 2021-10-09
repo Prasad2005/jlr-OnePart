@@ -1,0 +1,40 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 
+   http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+   
+	<id>classes</id>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<files>
+		<file>
+			<source>target/cvplugin_classes/cvplugin.properties</source>
+			<outputDirectory>META-INF</outputDirectory>
+		</file>
+		<file>
+			<source>pom.xml</source>
+			<outputDirectory>maven</outputDirectory>
+		</file>
+	</files>
+	<fileSets>
+		<!-- Not packaged with plugin but in dedicated sources assembly
+		<fileSet>
+			<directory>src</directory>
+			<outputDirectory>maven/src</outputDirectory>
+		</fileSet>
+		-->
+		<fileSet>
+			<directory>src/main/jlr-onepartTags</directory>
+			<outputDirectory>jlr-onepartTags</outputDirectory>
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+            <unpack>false</unpack>
+            <outputDirectory>lib</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+</assembly>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+           elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:annotation>
+        <xs:documentation>Mashup (UI and Access) merger configuration
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:include schemaLocation="CommonTypes.xsd"/>
+
+    <xs:element name="MashupMerger" type="MashupMergerConfig"M/>
+
+    <xs:complexType name="MashupMergerConfig">
+        <xs:sequence>
+            <xs:element name="ignorePage" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="mode" type="MashupMode" minOccurs="0"
+                        maxOccurs="1"/>
+			<xs:element name="securityConfig" type="xs:string" minOccurs="0"
+						maxOccurs="1"/>
+            <xs:element name="feeds" type="Feeds" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element name="application" type="Application" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element name="pages" type="Pages" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element name="securityProvider" type="FeedOverride" minOccurs="0"
+                        maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Application">
+        <xs:sequence>
+            <xs:element name="option" type="OptionOverride" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="trigger" type="OptionOverride" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="component" type="OptionOverride" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="controller" type="OptionOverride" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Pages">
+        <xs:sequence>
+            <xs:element name="page" type="Page" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="Feeds">
+        <xs:sequence>
+            <xs:element name="feed" type="FeedOverride" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FeedParameter">
+        <xs:attribute type="xs:string" name="name"/>
+        <xs:attribute type="xs:string" name="value"/>
+    </xs:complexType>
+
+    <xs:complexType name="FeedOverride">
+        <xs:sequence>
+            <xs:element name="className" type="xs:string" minOccurs="1"
+                        maxOccurs="unbounded"/>
+            <xs:element name="removeParameter" type="xs:string"
+                        minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="addParameter" type="FeedParameter"
+                        minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="updateParameter" type="FeedParameter"
+                        minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OptionOverride">
+        <xs:attribute type="xs:string" name="name"/>
+        <xs:attribute type="xs:string" name="value"/>
+        <xs:attribute type="Mode" name="mode"/>
+        <xs:attribute type="xs:string" name="config"/>
+        <xs:attribute type="xs:string" name="newValue"/>
+    </xs:complexType>
+
+    <xs:simpleType final="restriction" name="MashupMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="latest"/>
+            <xs:enumeration value="oldest"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Page">
+        <xs:sequence>
+            <xs:element name="fromConfig" type="xs:string" minOccurs="0"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="mode" type="Mode"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

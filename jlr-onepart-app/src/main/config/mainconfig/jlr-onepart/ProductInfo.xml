@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProductInfo>
+    <name>${info.name}</name>
+    <version>${info.version}</version>
+    <revision>${info.revision}</revision>
+    <date>${info.date}</date>
+</ProductInfo>

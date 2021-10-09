@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:annotation>
+        <xs:documentation>DataModels merger configuration</xs:documentation>
+    </xs:annotation>
+
+    <xs:include schemaLocation="CommonTypes.xsd"/>
+
+    <xs:element name="DataModelsMerger" type="DataModelsMergerConfig"/>
+
+    <xs:complexType name="DataModelsMergerConfig">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="dmClasses" type="dmClasses"/>
+        </xs:sequence>
+        <xs:attribute name="keepStoreAllMetaValue" type="xs:boolean" default="false"/>
+    </xs:complexType>
+
+
+    <xs:complexType name="dmClasses">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="dmClass"
+                        type="dmClass"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="dmClass">
+        <xs:attribute name="fromConfig" type="xs:string" use="optional"/>
+        <xs:attribute name="mode" type="Mode"/>
+        <xs:attribute name="name" type="xs:string"/>
+    </xs:complexType>
+</xs:schema>

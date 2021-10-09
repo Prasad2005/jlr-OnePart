@@ -1,0 +1,9 @@
+<GenericElementsMerger xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             xsi:noNamespaceSchemaLocation="../xsd/GenericElementsMergerConfig.xsd">
+    <genericElements>
+		<!-- Overrides pipe by dependency ones if name ends with application name (recommended) -->
+        <!-- 
+		<genericElement fromConfig="[APP_NAME]-app" mode="override" name="ap_[APPNAME]"/>
+		-->
+    </genericElements>
+</GenericElementsMerger>

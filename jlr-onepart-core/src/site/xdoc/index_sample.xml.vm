@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    <properties>
+        <title>PLMA core components</title>
+        <author email="sebastien.guillomon@3ds.com">Sebastien GUILLOMON</author>
+    </properties>
+
+    <body>
+        <section name="Project information">
+            <p><b>Name : </b>$project.name</p>
+            <p><b>GroupId : </b>$project.groupId</p>
+            <p><b>GroupId : </b>$project.artifactId</p>
+            <p><b>Version : $context.get("cv.documentation.version")</b></p>
+        </section>
+        <section name="Project description">
+            <p>$project.description</p>
+        </section>
+        <section name="Overview">
+            <p>This project contains Core components :
+                <ul>
+                    <li>Connectors</li>
+                    <li>PAPI Filters</li>
+                    <li>Document processors</li>
+                    <li>Prefix handlers</li>
+                    <li>Consoldation transformation and aggregation processors</li>
+                </ul>
+            </p>
+        </section>
+    </body>
+</document>
+

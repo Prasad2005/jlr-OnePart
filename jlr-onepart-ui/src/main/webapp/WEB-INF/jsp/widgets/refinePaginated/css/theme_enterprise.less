@@ -1,0 +1,184 @@
+.mashup {
+	.refines {
+		text-align: left;
+	
+		.facets {
+	
+			// Facet title
+			h3 {
+				color: @cblock;
+				.linear-gradient(@cblock-bg-alt + #070707, @cblock-bg-alt - #070707);
+				border: 1px solid @cblock-border;
+				border-width: 1px 0 1px 0;
+				margin: 0 0 2px 0;
+				padding-left: 5px;
+	
+				line-height: 25px;
+				font-size: 11px;
+				cursor: pointer;
+	
+				&:first-child {
+					border-top: 0px;
+				}
+				&:hover {
+					.linear-gradient(@cblock-bg-alt - #070707, @cblock-bg-alt + #070707);
+					text-decoration: underline;
+				}
+				
+				.infos {
+					float: right;
+					margin-right: 3px;
+					color: #666;
+					font-size: 10px;
+					display: none;
+				}
+				
+				.icon-collapsable {
+					margin-right:2px;
+					background-image:url(../images/sprite_collapse_dark_grey.png);
+					background-repeat:no-repeat;
+					background-position:0 -15px;
+					width:15px;
+					height:15px;
+					vertical-align:text-top;
+					
+					display:inline-block;
+					/* IE6 display inline block */ 
+					zoom:1;
+					*display:inline;
+				}
+				.icon-collapsed {
+					.icon-collapsable;
+					background-position:0 0;
+				}
+			}
+	
+			.facet {
+				table-layout: fixed; 
+				border-collapse: collapse;
+				line-height: 19px;
+				width: 100%;
+				
+				&.collapsed {
+					display: none;
+				}
+	
+				.category {
+					color: @ctext-weaker;
+					font-size: 11px;
+	
+					// Default styles and colors
+	
+					td {
+						vertical-align: top;
+						text-align:center;
+						padding: 0;
+	
+						a {
+							display: block;
+							color: @ctext-weak;
+	
+							&:hover {
+								text-decoration: none;
+							}
+						}
+						
+						&.disjunctive {
+							width: 20px;
+						}
+	
+						&.refineName {
+							text-align: left;
+							.wordbreak();
+						}
+	
+						&.count {
+							white-space: nowrap;
+							text-align: right;
+							padding-right: 3px;
+							width: 50px;
+	
+							.countcontainer {
+								display: inline-block;
+								font-size: 9px;
+								height: 14px;
+								line-height: 14px;
+								width: auto;
+								min-width: 20px;
+								margin: 2px 0;
+								padding: 0 2px 0 2px;
+								color:@ctext-weaker;
+								border: 1px solid darken(@cblock-bg-alt, 10%);
+								.linear-gradient(@cblock-bg-alt + #0F0F0F, @cblock-bg-alt);
+								.border-radius(7px);
+							}
+						}
+	
+						&.exclude {
+							width: 15px;
+	
+							a {
+								font-weight: bold;
+							}
+						}
+					}
+	
+					// refined row
+	
+					&.refined {
+						background-color: #fd3f92;
+						color: #ffffff;
+						a {
+							color: #ffffff;
+						}
+					}
+	
+					// excluded row
+	
+					&.excluded {
+						background-color: #FFC0C0;
+					}
+	
+					// hovered row
+	
+					&:hover {
+						background-color: #db0073;
+						color: #ffffff;
+						a {
+							color: #ffffff;
+						}
+					}
+	
+					// Depth levels
+					&.depthLevel_0 .refinecontainer { padding-left: 5px; }
+					&.depthLevel_1 .refinecontainer { padding-left: 12px; }
+					&.depthLevel_2 .refinecontainer { padding-left: 19px; }
+					&.depthLevel_3 .refinecontainer { padding-left: 26px; }
+					&.depthLevel_4 .refinecontainer { padding-left: 33px; }
+					&.depthLevel_5 .refinecontainer { padding-left: 40px; }
+					&.depthLevel_6 .refinecontainer { padding-left: 47px; }
+					&.depthLevel_7 .refinecontainer { padding-left: 49px; }
+					&.depthLevel_8 .refinecontainer { padding-left: 51px; }
+					&.depthLevel_9 .refinecontainer { padding-left: 53px; }
+					&.depthLevel_10 .refinecontainer { padding-left: 55px; }
+					&.depthLevel_11 .refinecontainer { padding-left: 57px; }
+					&.depthLevel_12 .refinecontainer { padding-left: 59px; }
+					&.depthLevel_13 .refinecontainer { padding-left: 61px; }
+					&.depthLevel_14 .refinecontainer { padding-left: 63px; }
+					&.depthLevel_15 .refinecontainer { padding-left: 65px; }
+					
+					&.refinecontainer {
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					}
+				}
+			}
+		}
+		
+		img.flag {
+			.box-shadow(0, 0, 2px, #555555);
+			vertical-align: middle;
+		}
+	}
+}

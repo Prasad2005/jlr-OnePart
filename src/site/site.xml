@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.5</version>
+    </skin>
+
+    <bannerLeft>
+        <name>Exalead</name>
+        <src>images/logo_3DS.png</src>
+        <href>https://nexus.exalead.com/repository/public-site/index.html</href>
+    </bannerLeft>
+
+    <bannerRight>
+        <src>images/logo_exalead.png</src>
+        <href>https://nexus.exalead.com/repository/public-site/index.html</href>
+    </bannerRight>
+
+    <version position="none"/>
+
+    <poweredBy>
+        <logo name="3DS" href="https://www.3ds.com/"
+              img="images/compass.png"/>
+    </poweredBy>
+
+    <body>
+        <menu name="Overview">
+            <item name="Project overview" href="index.html"/>
+            <item name="Project information" href="project-info.html"/>
+            <item name="Javadoc" href="apidocs/index.html"/>
+        </menu>
+
+        <menu name="Core components">
+            <item name="Project overview" href="../jlr-onepart-core/index.html"/>
+            <item name="Components details" href="../jlr-onepart-core/cv-classes-descriptors.html"/>
+            <item name="Javadoc" href="../jlr-onepart-core/apidocs/index.html"/>
+        </menu>
+
+        <menu name="Access API components">
+            <item name="Project overview" href="../jlr-onepart-access/index.html"/>
+            <item name="Components details" href="../jlr-onepart-access/cv-classes-descriptors.html"/>
+            <item name="MEL functions" href="../jlr-onepart-access/cv-melfunctions-descriptors.html"/>
+            <item name="Javadoc" href="../jlr-onepart-access/apidocs/index.html"/>
+        </menu>
+
+        <menu name="Mashup UI components">
+            <item name="Project overview" href="../jlr-onepart-ui/index.html"/>
+            <item name="Components details" href="../jlr-onepart-ui/cv-classes-descriptors.html"/>
+            <item name="MEL functions" href="../jlr-onepart-ui/cv-melfunctions-descriptors.html"/>
+            <item name="Spring controllers" href="../jlr-onepart-ui/cv-controllers-descriptors.html"/>
+            <item name="Taglibs" href="../jlr-onepart-ui/cv-taglibs-descriptors.html"/>
+            <item name="Widgets" href="../jlr-onepart-ui/cv-widgets-descriptors.html"/>
+            <item name="Javadoc" href="../jlr-onepart-ui/apidocs/index.html"/>
+        </menu>
+
+        <!-- Add custom documentation
+        <menu name="Examples">
+            <item name="description1" href="examples/example-one.html"/>
+            <item name="description2" href="examples/example-two.html"/>
+        </menu>-->
+    </body>
+</project>

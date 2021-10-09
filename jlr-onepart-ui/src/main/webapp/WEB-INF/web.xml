@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>Search GUI</display-name>
+	<description>Search - Cloudview 360</description>
+
+	<jsp-config>
+		<taglib>
+			<!-- Override tiles taglib to try/catch exception in the custom InsertTemplateTag -->
+			<taglib-uri>http://tiles.apache.org/tags-tiles</taglib-uri>
+			<taglib-location>/META-INF/tiles-jsp.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/360-search-ui.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>serviceType</param-name>
+		<param-value>360-mashup-ui</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>com.exalead.cv360.searchui.config.MashupContext</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Rewrites requests (see urlrewrite.xml) -->
+	<!--
+	<filter>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>DEBUG</param-value>
+		</init-param>
+		<init-param>
+			<param-name>confReloadCheckInterval</param-name>
+			<param-value>5</param-value>
+		</init-param>
+		<init-param>
+			<param-name>statusEnabled</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	-->
+
+	<!-- Inject proxy prefix to urls when parameter is in request -->
+	<filter>
+		<filter-name>CustomContextPathFilter</filter-name>
+		<filter-class>com.exalead.cv360.searchui.mvc.filter.CustomContextPathFilter</filter-class>
+		<init-param>
+			<param-name>prefixContextPathParameterName</param-name>
+			<param-value>prefixContextPath</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CustomContextPathFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Overrides context path for preview request from the Mashup Builder -->
+	<filter>
+		<filter-name>PreviewContextPathFilter</filter-name>
+		<filter-class>com.exalead.cv360.searchui.mvc.filter.PreviewContextPathFilter</filter-class>
+		<init-param>
+			<param-name>rootPath</param-name>
+			<param-value>/staging-builder/{index}</param-value> <!-- see MashupController.preview() -->
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>PreviewContextPathFilter</filter-name>
+		<url-pattern>/staging-builder/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<!-- Write response headers according the configuration -->
+	<filter>
+		<filter-name>ResponseHeaderFilter</filter-name>
+		<filter-class>com.exalead.cv360.service.filters.ResponseHeaderFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ResponseHeaderFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<!-- Custom filter which check if the user is connected -->
+	<filter>
+		<filter-name>ConnectedFilter</filter-name>
+		<filter-class>com.exalead.cv360.searchui.mvc.filter.ConnectedFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ConnectedFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<!-- Trim filter: Reduces page weight by stripping unnecessary chars -->
+	<filter>
+		<filter-name>TrimFilter</filter-name>
+		<filter-class>com.exalead.cv360.service.filters.TrimFilter</filter-class>
+		<init-param>
+			<param-name>aggressive</param-name>
+			<param-value>false</param-value><!-- true also removes newlines, which may be dangerous for javascript. -->
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>TrimFilter</filter-name>
+		<url-pattern>/page/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>TrimFilter</filter-name>
+		<url-pattern>/testProduction/trimFilter</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<!--  Gzip filter: content compression -->
+
+	<!-- 
+	<filter>
+		<filter-name>GzipFilter</filter-name>
+		<filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class>
+	<init-param>
+		<param-name>mimeTypes</param-name>
+		<param-value>text/html,text/plain,text/xml,application/xhtml+xml,text/css,application/javascript,application/x-javascript,image/svg+xml</param-value>
+	</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>GzipFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	-->
+
+	<!-- Enable development mode on JSP servlet -->
+	<!--
+	<servlet>
+		<servlet-name>jsp</servlet-name>
+		<init-param>
+			<param-name>development</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+	-->
+
+	<!-- Default servlets -->
+	<servlet>
+		<servlet-name>360-admin-service</servlet-name>
+		<servlet-class>com.exalead.cv360.searchui.admin.SearchAdminService</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>360-search-ui</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet> 
+
+	<servlet-mapping>
+		<servlet-name>360-search-ui</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>360-admin-service</servlet-name>
+		<url-pattern>/admin/*</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/errors/404</location>
+	</error-page>
+</web-app>

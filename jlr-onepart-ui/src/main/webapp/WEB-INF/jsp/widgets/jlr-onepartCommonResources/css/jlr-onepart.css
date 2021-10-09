@@ -1,0 +1,122 @@
+.select-display-div {
+	text-align:center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.select-display-button {
+	width: 100px;
+	background: #fd3f92;
+	background-image: -webkit-linear-gradient(top, #fd3f92, #fd3f92);
+	background-image: -moz-linear-gradient(top, #fd3f92, #fd3f92);
+	background-image: -ms-linear-gradient(top, #fd3f92, #fd3f92);
+	background-image: -o-linear-gradient(top, #fd3f92, #fd3f92);
+	background-image: linear-gradient(to bottom, #fd3f92, #fd3f92);
+	-webkit-border-radius: 10;
+	-moz-border-radius: 10;
+	border-radius: 10px;
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 20px;
+	padding: 10px 20px 10px 20px;
+	text-decoration: none;
+	cursor:pointer;
+}
+
+.select-display-button-bilan {
+	width: 100px;
+	background: #fd3f92;
+	background-image: -webkit-linear-gradient(top, #fd3f92, #fd3f92);
+	background-image: -moz-linear-gradient(top, #fd3f92, #fd3f92);
+	background-image: -ms-linear-gradient(top, #fd3f92, #fd3f92);
+	background-image: -o-linear-gradient(top, #fd3f92, #fd3f92);
+	background-image: linear-gradient(to bottom, #fd3f92, #fd3f92);
+	-webkit-border-radius: 10;
+	-moz-border-radius: 10;
+	border-radius: 10px;
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 15px;
+	padding: 5px 10px 5px 10px;
+	text-decoration: none;
+	cursor:pointer;
+}
+
+
+.select-display-button-period {
+	width: 100px;
+	background: #fd3f92;
+	background-image: -webkit-linear-gradient(top, #FF73BF, #FF73BF);
+	background-image: -moz-linear-gradient(top, #FF73BF, #FF73BF);
+	background-image: -ms-linear-gradient(top, #FF73BF, #FF73BF);
+	background-image: -o-linear-gradient(top, #FF73BF, #FF73BF);
+	background-image: linear-gradient(to bottom, #FF73BF, #FF73BF);
+	-webkit-border-radius: 10;
+	-moz-border-radius: 10;
+	border-radius: 10px;
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 15px;
+	padding: 5px 10px 5px 10px;
+	text-decoration: none;
+	cursor:pointer;
+}
+
+.select-display-button:hover, .select-display-button-selected {
+	text-decoration: none;
+	background: #db0073;
+	background-image: -webkit-linear-gradient(top, #db0073, #db0073);
+	background-image: -moz-linear-gradient(top, #db0073, #db0073);
+	background-image: -ms-linear-gradient(top, #db0073, #db0073);
+	background-image: -o-linear-gradient(top, #db0073, #db0073);
+	background-image: linear-gradient(to bottom, #db0073, #db0073);
+	text-decoration: none;
+}
+
+.select-display-button-period:hover, .select-display-button-period-selected {
+	text-decoration: none;
+	background: #db0073;
+	background-image: -webkit-linear-gradient(top, #db0073, #db0073);
+	background-image: -moz-linear-gradient(top, #db0073, #db0073);
+	background-image: -ms-linear-gradient(top, #db0073, #db0073);
+	background-image: -o-linear-gradient(top, #db0073, #db0073);
+	background-image: linear-gradient(to bottom, #db0073, #db0073);
+	text-decoration: none;
+	-webkit-border-radius: 50;
+	-moz-border-radius: 50;
+	border-radius: 50px;
+}
+
+.select-display-button-bilan:hover, .select-display-button-bilan-selected {
+	text-decoration: none;
+	background: #db0073;
+	background-image: -webkit-linear-gradient(top, #db0073, #db0073);
+	background-image: -moz-linear-gradient(top, #db0073, #db0073);
+	background-image: -ms-linear-gradient(top, #db0073, #db0073);
+	background-image: -o-linear-gradient(top, #db0073, #db0073);
+	background-image: linear-gradient(to bottom, #db0073, #db0073);
+	text-decoration: none;
+	-webkit-border-radius: 50;
+	-moz-border-radius: 50;
+	border-radius: 50px;
+}
+
+.select-display-button:active {
+	position: relative;
+	top: 1px;
+}
+
+.select-display-button-period:active {
+	position: relative;
+	top: 1px;
+}
+
+.mashup .select-display-div a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.mashup .select-display-div a:hover {
+	text-decoration: none;
+}

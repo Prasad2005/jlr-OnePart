@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MashupMerger xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:noNamespaceSchemaLocation="../xsd/MashupMergerConfig.xsd">
+    <ignorePage>test.*</ignorePage>
+    <mode>latest</mode>
+    <feeds>
+        <feed>
+            <className>com.exalead.access.basefeeds.CloudviewFeed</className>
+            <className>com.exalead.access.basefeeds.BusinessItemFeed</className>
+           <!--  <removeParameter>proxyAuthenticationMode</removeParameter>
+            <removeParameter>proxyUsername</removeParameter>
+            <removeParameter>proxyPassword</removeParameter> -->
+            <removeParameter>searchapi</removeParameter>
+			<addParameter name="apiConfig" value="sapi0" />
+            <!-- <updateParameter name="max_number_of_connections" value="4"/> -->
+        </feed>
+    </feeds>
+    <pages>
+        <!-- Add custom merger rules
+        <page>
+            <fromConfig>Dev1</fromConfig>
+            <name>search</name>
+            <mode>override</mode>
+        </page>
+        <page>
+            <name>management</name>
+            <mode>override</mode>
+        </page> 
+        <page>
+            <name>index</name>
+            <mode>keepmain</mode>
+        </page>
+        -->
+     </pages>
+</MashupMerger>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:annotation>
+        <xs:documentation>Consolidation merger configuration</xs:documentation>
+    </xs:annotation>
+
+    <xs:include schemaLocation="GenericElementsMergerConfig.xsd"/>
+
+    <xs:element name="ConsolidationMerger" type="ConsolidationMergerConfig"/>
+
+    <xs:complexType name="ConsolidationMergerConfig">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="config" type="genericElement"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="processors" type="processors"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="forwards" type="ForwardRules"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="triggers" type="triggers"/>
+        </xs:sequence>
+        <xs:attribute name="profileTransformation" type="xs:boolean" default="false">
+            <xs:annotation>
+                <xs:documentation>Enable transformation processors profiling (enable for all), set keyvalue 'Profile' to 'true'</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="profileAggregation" type="xs:boolean" default="false">
+            <xs:annotation>
+                <xs:documentation>Enable aggregation processors profiling (enable for all), set keyvalue 'Profile' to 'true'</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="advancedConfig" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Advanced config tag source configuration name</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="processors">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="processor"
+                        type="processor"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="processor">
+        <xs:attribute name="fromConfig" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Processor source configuration name</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="mode" type="Mode">
+            <xs:annotation>
+                <xs:documentation>Mode ('override', 'keepmain' or 'ignore')</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Aggregation or transformation processor name (regular expression)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="profile" type="xs:boolean" default="false">
+            <xs:annotation>
+                <xs:documentation>Enable processor profiling, set keyvalue 'Profile' to 'true'</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="profileId" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Set explicitly profiling ID</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="ForwardRules">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="rule" type="genericElement"/>
+        </xs:sequence>
+        <xs:attribute name="papi" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Forward rules Push API server</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="trigger" type="xs:boolean" default="false">
+            <xs:annotation>
+                <xs:documentation>Enable commit after push</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="triggers">
+        <xs:attribute name="commit" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Commit triggers source configuration name</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="aggregation" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Aggregation triggers source configuration name</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+</xs:schema>

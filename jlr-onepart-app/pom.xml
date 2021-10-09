@@ -1,0 +1,465 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.exalead.customers.jlr.onepart</groupId>
+		<artifactId>jlr-onepart</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jlr-onepart-app</artifactId>
+	<packaging>jar</packaging>
+
+	<name>jlr-onepart-app</name>
+	<url>http://maven.apache.org</url>
+
+	
+	<build>
+		<finalName>${project.name}</finalName>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			
+			<!-- Code style -->
+			<plugin>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+
+			<!-- Merge configuration files -->
+			<plugin>
+				<groupId>com.exalead.tools</groupId>
+				<artifactId>exa-cv-config-maven-plugin</artifactId>
+
+
+				<dependencies>
+					<!-- Uncomment this block if you want to implement custom merger class.
+						It adds to the plugin classloader project classes.
+					<dependency>
+	                  <groupId>com.exalead.customers.jlr.onepart</groupId>
+	                  <artifactId>jlr-onepart</artifactId>
+	                  <version>1.0.0-SNAPSHOT-SNAPSHOT-SNAPSHOT</version>
+	                </dependency>
+	                -->
+					<!-- JAXB
+						 Add explicitely JAXB dependencies to parse and serialize XML config files, indeed, these libraries are not
+						 included anymore in JDKs
+					-->
+					<dependency>
+						<groupId>javax.annotation</groupId>
+						<artifactId>javax.annotation-api</artifactId>
+						<version>1.3.2</version>
+					</dependency>
+
+					<dependency>
+						<groupId>javax.xml.bind</groupId>
+						<artifactId>jaxb-api</artifactId>
+						<version>2.3.1</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.glassfish.jaxb</groupId>
+						<artifactId>jaxb-runtime</artifactId>
+						<version>2.3.2</version>
+					</dependency>
+				</dependencies>
+
+				<executions>
+					<!-- Merge or get from specific folders configuration files...
+							Documentation: https://docs.factory.exalead.com/exa-cv-config-maven-plugin/merge-mojo.html
+					-->
+					<execution>
+						<id>merge_global_config</id>
+						<goals>
+							<goal>merge</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+							<stopOnFailure>false</stopOnFailure>
+							<!-- Merge from roles (name of user = folder name in src/main/config/devconfig)
+							<roles>
+								<role>MUI</role>
+							</roles>
+							-->
+							<!-- Merge folder names (if not using roles)
+							<folderNames>
+								<folderName>Dev1</folderName>
+								<folderName>Dev2</folderName>
+							</folderNames>
+							-->
+
+							<!-- Exclude some files from inherited application
+							<excludes>
+								<exclude>Deployment.xml</exclude>
+								<exclude>Convert.xml</exclude>
+							</excludes>
+							-->
+
+							<!-- Merge from application dependencies (need to be present in POM dependencies)
+									The advantage of this method is to merge or extend application without copying application(s)
+									config files in devconfig folder, the merger fetch the files from the dependencies zip files.
+									So, it is also easier to upgrade application(s) dependencies -->
+
+							<!--
+							<dependencies>
+								<dependency>app1-app</dependency>
+								<dependency>app2-app</dependency>
+							</dependencies>
+							-->
+
+
+							<!-- Merge files using implicit rules (based on file name) -->
+							<files>
+								<!--
+								<file>360/applications/default/MashupI18N.xml</file>
+								<file>360/applications/default/Access.xml</file>
+								<file>360/applications/default/MashupUI.xml</file> -->
+							</files>
+							<!-- Override file in target config with specified configuration folder (configName)
+							<filesFromConfigNames>
+								<filesFromConfigName>
+									<paths>
+										<path>Consolidation.xml</path>
+										<path>DataModels.xml</path>
+										<path>enovia/EnoviaII.xml</path>
+									</paths>
+									From folder name
+									<configName>Dev1</configName>
+									From application dependency
+									<configName>app1-app</configName>
+								</filesFromConfigName>
+							</filesFromConfigNames> -->
+							<!-- Complex configuration (add configuration to the merger), you can implement your own merger -->
+							<fileWithConfigurations>
+								<!--
+								<fileWithConfiguration>
+									<paths>
+										<path>360/applications/default/Access.xml</path>
+									</paths>
+									<configurationPath>src/main/resources/mergeconfig/samples/mashup_merge.xml</configurationPath>
+									<merger>custom-merger-id</merger>
+								</fileWithConfiguration> -->
+								<fileWithConfiguration>
+									<id>mashup</id>
+									<paths>
+										<!--
+										<path>360/applications/default/Access.xml</path>
+										<file>360/applications/default/MashupUI.xml</file>
+										 -->
+									</paths>
+									<configurationPath>src/main/resources/mergeconfig/samples/mashup_merge.xml</configurationPath>
+								</fileWithConfiguration>
+								<!-- Configure to keep extended application classes
+								<fileWithConfiguration>
+									<id>datamodels</id>
+									<paths>
+										<path>DataModels.xml</path>
+									</paths>
+									<configurationPath>src/main/resources/mergeconfig/samples/datamodels_merge.xml</configurationPath>
+								</fileWithConfiguration> -->
+								<!-- Configure connectors merger (and connectors deployment rules)
+								<fileWithConfiguration>
+									<id>connectors</id>
+									<paths>
+										<path>Connectors.xml</path>
+									</paths>
+									<configurationPath>src/main/resources/mergeconfig/samples/connectors_merge.xml</configurationPath>
+								</fileWithConfiguration> -->
+								<!-- Uncomment and configure 'apps_merge.xml' to exclude extended application(s) from target package -->
+								<!-- <fileWithConfiguration>
+									<id>mashup</id>
+									<paths>
+										<path>360/ApplicationList.xml</path>
+									</paths>
+									<configurationPath>src/main/resources/mergeconfig/samples/apps_merge.xml</configurationPath>
+								</fileWithConfiguration> -->
+							</fileWithConfigurations>
+						</configuration>
+					</execution>
+
+					<!-- Configuration variabilization (using properties file)
+						 Default variabilization configuration file is located here : src/main/resources/variables/app.properties
+						 Documentation: https://docs.factory.exalead.com/exa-cv-config-maven-plugin/variabilize-mojo.html
+					<execution>
+						<id>variabilize_app</id>
+						<goals>
+							<goal>variabilize</goal>
+						</goals>
+						<inherited>true</inherited>
+						<configuration>
+							<files>
+								<file>Connectors.xml</file>
+							</files>
+						</configuration>
+					</execution> -->
+
+					<!-- Remove verbose mode from consolidation (not mandatory for merged config because managed by merger)
+							'mode' config of goal is replaced by 'replace': replace XPATH value instead of adding a variable
+					<execution>
+						<id>clean_verbose</id>
+                        <goals>
+                            <goal>variabilize</goal>
+                        </goals>
+                        <inherited>true</inherited>
+                        <configuration>
+                            <files>
+                                <file>Consolidation.xml</file>
+                            </files>
+                            <propertiesFile>src/main/resources/variables/remove_verbose.properties</propertiesFile>
+                            <mode>replace</mode>
+                        </configuration>
+					</execution> -->
+
+				</executions>
+			</plugin>
+
+			<!-- CloudView packaging Maven plugins
+					Documentation: https://docs.factory.exalead.com/exa-cv-package-maven-plugin/plugin-info.html
+			-->
+			<plugin>
+				<groupId>com.exalead.tools</groupId>
+				<artifactId>exa-cv-package-maven-plugin</artifactId>
+				<executions>
+					<!-- Generate application descriptor 'cvapp.properties' file
+							Documentation: https://docs.factory.exalead.com/exa-cv-package-maven-plugin/cv-app-descriptor-mojo.html
+					-->
+					<execution>
+						<id>generate_descriptor</id>
+						<goals>
+							<goal>cv-app-descriptor</goal>
+						</goals>
+						<inherited>true</inherited>
+						<configuration>
+							<outputDirectory>target</outputDirectory>
+						</configuration>
+					</execution>
+
+
+				<!-- Merge assembly descriptors (easily upgrade app), use this goal if you want to merge
+							automatically your assembly (in src/main/assembly) with app dependencies assemblies.
+							It generate a new assembly descriptor in target folder.
+                     		Documentation: https://docs.factory.exalead.com/exa-cv-package-maven-plugin/merge-assemblies-mojo.html
+                -->
+
+					<!--<execution>
+						<id>merge_assemblies</id>
+						<goals>
+							<goal>AssembliesDescriptorsMerger</goal>
+						</goals>
+						<inherited>true</inherited>
+						<configuration>
+							<dependencies>
+								<dependency>app1-app</dependency>
+								<dependency>app2-app</dependency>
+							</dependencies>
+						</configuration>
+					</execution>-->
+
+					<!-- Process generated configuration to detect application properties and generates 'app.properties'
+							file in 'target/documents' folder with properties names and comments lines
+							Documentation: https://docs.factory.exalead.com/exa-cv-package-maven-plugin/detect-properties-mojo.html
+					-->
+					<execution>
+						<id>detect_Properties</id>
+						<goals>
+							<goal>detect-properties</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Exalead reporting plugin
+					Documentation: https://docs.factory.exalead.com/exa-cv-reports-maven-plugin/plugin-info.html
+			-->
+			<plugin>
+				<groupId>com.exalead.tools</groupId>
+				<artifactId>exa-cv-reports-maven-plugin</artifactId>
+				<executions>
+					<!-- Generate PDF application documentation, this documentation generate datamodel synthesis,
+                                        releases notes, consolidation doc ...
+                    		Documentation: https://docs.factory.exalead.com/exa-cv-reports-maven-plugin/app-doc-mojo.html
+                    -->
+					<execution>
+						<id>generate_doc</id>
+						<goals>
+							<goal>app-doc</goal>
+						</goals>
+						<configuration>
+							<!-- commented, use standard order ...
+                            <chapters>
+                                <chapter>properties</chapter>
+                                <chapter>contributors</chapter>
+                                <chapter>file:description.txt</chapter>
+                                <chapter>html:test.html|Chapitre HTML</chapter>
+                                <chapter>config</chapter>
+                                <chapter>assembly</chapter>
+                                <chapter>releases_notes</chapter>
+                            </chapters>
+                            -->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- Make application zip file -->
+			
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+			</plugin>
+
+			<!-- Use this goal for generated assembly descriptor in target folder -->
+			<!--<plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>package_zip</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>target/assembly-dist.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
+			
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+		   </plugin>
+			 
+			 <!-- Get SVN or GIT revision -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+            </plugin>
+
+
+            <!-- Create product infos config file -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>create-product-infos</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/config</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <outputDirectory>target/config</outputDirectory>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+			
+			<!-- Propagate apps dependencies resources in target folde -->
+
+			<!-- Generates GIT logs reports
+				Changelog files are generated in 'target/documents' folder and then are added in application zip file
+
+			<plugin>
+				<groupId>com.github.danielflower.mavenplugins</groupId>
+				<artifactId>gitlog-maven-plugin</artifactId>
+				<version>1.13.17</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<reportTitle>JLR-ONEPART application git changelog</reportTitle>
+					<outputDirectory>target/documents</outputDirectory>
+					<dateFormat>yyyy-MM-dd HH:mm</dateFormat>
+					<fullGitMessage>true</fullGitMessage>
+					<showCommiter>false</showCommiter>
+				</configuration>
+			</plugin> -->
+		</plugins>
+	</build>
+
+	<dependencies>
+        <dependency>
+            <groupId>com.exalead.custom</groupId>
+            <artifactId>CustomCVPapiFilters</artifactId>
+            <version>${plugins.core.version}</version>
+            <type>zip</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.exalead.custom</groupId>
+            <artifactId>CustomAccessComponents</artifactId>
+            <version>${plugins.access.version}</version>
+            <type>zip</type>
+        </dependency>
+		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jlr-onepart-core</artifactId>
+			<version>${project.version}</version>
+			<type>zip</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jlr-onepart-access</artifactId>
+			<version>${project.version}</version>
+			<type>zip</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jlr-onepart-ui</artifactId>
+			<version>${project.version}</version>
+			<type>zip</type>
+		</dependency>
+
+
+		<!-- Uncomment if you implement custom merger
+		<dependency>
+			<groupId>com.exalead.tools</groupId>
+			<artifactId>CVMavenPlugin</artifactId>
+			<version>${cv.maven.plugin.version}</version>
+		</dependency> -->
+		
+		<!-- Case of application dependency 
+		<dependency>
+			<groupId>${externalapp.groupId}</groupId>
+			<artifactId>app1-app</artifactId>
+			<version>${externalapp.version}</version>
+			<type>zip</type>
+		</dependency>
+		-->
+	</dependencies>
+
+	<!--  Configure target Maven Repo
+	<distributionManagement>
+		<repository>
+			<id>reponame</id>
+			<name>CloudView Release Repository</name>
+			<url>http://host:port/repository/reponame/</url>
+		</repository>
+	</distributionManagement>
+	 -->
+</project>

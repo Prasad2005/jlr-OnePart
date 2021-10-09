@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType final="restriction" name="Mode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="override" />
+			<xs:enumeration value="merge" />
+			<xs:enumeration value="keepmain" />
+			<xs:enumeration value="ignore" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.exalead.tools</groupId>
+		<artifactId>cv-apps-parent</artifactId>
+		<version>423.1.2</version>
+    </parent>
+	
+	<groupId>com.exalead.customers.jlr.onepart</groupId>
+	<artifactId>jlr-onepart</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>jlr-onepart</name>
+	<inceptionYear>2015</inceptionYear>
+
+	<modules>
+		<!-- Configure here the child projects (can be generated using CloudView Archetypes) -->
+		<module>jlr-onepart-core</module>
+		<module>jlr-onepart-access</module> 
+		<module>jlr-onepart-ui</module>
+		<module>jlr-onepart-app</module> 
+	</modules>
+	<!-- Uncomment this block if not configured in user settings.xml file
+	<profiles>
+		<profile>
+	 		<id>dev</id>	
+	 		<properties>
+	 			<deploy.cloudview.instance>true</deploy.cloudview.instance>
+	 		</properties>
+	 	</profile>
+	 	<profile>
+	 		<id>jenkins</id>
+	 		<properties>
+	 			<deploy.cloudview.instance>false</deploy.cloudview.instance>
+	 		</properties>
+	 	</profile>
+	 </profiles>
+	 -->
+	 
+	 <!-- 
+	<contributors>
+		<contributor>
+			<name>Dev1</name>
+			<organization>Company</organization>
+			<roles>
+				<role>MUI</role>
+			</roles>
+		</contributor>
+		<contributor>
+			<name>Dev3</name>
+			<email>dev2@company.com</email>
+			<organization>Company</organization>
+			<roles>
+				<role>Consultant</role>
+			</roles>
+		</contributor>
+		<contributor>
+			<name>Dev2</name>
+			<organization>3DS</organization>
+			<roles>
+				<role>Company</role>
+			</roles>
+		</contributor>
+	</contributors>
+	-->
+
+	<properties>
+		<!-- Custom tools or plugins -->
+		<plugins.core.version>422.0.0</plugins.core.version>
+		<plugins.access.version>423.0.0</plugins.access.version>
+		 <java.version>11</java.version>
+	</properties>
+	
+	<!-- Uncomment and configure this block if you use Maven Release plugin
+	<scm>
+		<connection>scm:svn:[SVN_URL]/jlr-onepart/trunk</connection>
+		<developerConnection>scm:svn:[SVN_URL]/jlr-onepart/trunk</developerConnection>
+		<url>[SVN_URL]/jlr-onepart/trunk</url>
+	</scm>
+	-->
+	<scm>
+	    <url>scm:git:git@git-gdd.sdo.jlrmotor.com:avr/jlr-onepart.git</url>
+		<connection>scm:git:git@git-gdd.sdo.jlrmotor.com:avr/jlr-onepart.git</connection>
+		<developerConnection>scm:git:git@git-gdd.sdo.jlrmotor.com:avr/jlr-onepart.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.exalead.tools</groupId>
+				<artifactId>exa-misc-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>version-management</id>
+						<goals>
+							<!-- Set major version and modify site distribution URL if present ex. 1.0.2 to version 1.0 -->
+							<goal>doc-version-set</goal>
+						</goals>
+						<inherited>true</inherited>
+						<configuration />
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Check dependencies and plugins version updates
+			<plugin>
+				<groupId>com.exalead.tools</groupId>
+				<artifactId>exa-cv-reports-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>version-management</id>
+						<goals>
+							<goal>display-updates</goal>
+						</goals>
+						<inherited>true</inherited>
+						<configuration />
+					</execution>
+				</executions>
+			</plugin>
+			-->
+		</plugins>
+	</build>
+
+    <dependencyManagement/>
+
+   <distributionManagement>
+    <repository>
+        <id>releases</id>
+        <name>artifactory-2-prd-l7jd-releases</name>
+        <url>${distribution.releases.url}</url>
+    </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>artifactory-2-prd-l7jd-snapshots</name>
+        <url>${distribution.snapshots.url}</url>
+    </snapshotRepository>
+   </distributionManagement>
+</project>

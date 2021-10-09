@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.exalead.customers.jlr.onepart</groupId>
+		<artifactId>jlr-onepart</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jlr-onepart-ui</artifactId>
+	<packaging>jar</packaging>
+
+	<name>jlr-onepart-ui</name>
+	<url>http://maven.apache.org</url>
+	
+	<!-- Uncomment this block if not configured in user settings.xml file
+	<profiles>
+		<profile>
+	 		<id>deploy_mui_classes</id>	
+	 		<properties>
+	 			<deploy.mui.components>${project.artifactId}</deploy.mui.components>
+	 		</properties>
+	 	</profile>
+	 	<profile>
+	 		<id>deploy_mui_widgets</id>
+	 		<properties>
+	 			<deploy.mui.components>${uiPrefix}UI</deploy.mui.components>
+	 		</properties>
+	 	</profile>
+	</profiles>
+	-->
+
+	<properties>	
+		<!-- Properties used in cvplugin.properties -->
+		<cv.plugin.type>mashup</cv.plugin.type>
+		<cv.plugin.description>Custom Mashup UI components (UI triggers, controllers, widgets...)</cv.plugin.description>
+		<cv.plugin.tagsfolder>jlr-onepartTags</cv.plugin.tagsfolder>
+		<cv.mashup.ui.prefix>jlr-onepart</cv.mashup.ui.prefix>
+		<!-- Generate site index page with components overview -->
+		<maven.cv-components-doc.overview.index>true</maven.cv-components-doc.overview.index>
+	</properties>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>		
+			<!-- Update classpath -->
+            <plugin>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
+
+            <!-- Compile -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <!-- Test -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+
+            <!-- Code style -->
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+
+            <!-- Code validation -->
+            <plugin>
+                <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+
+			<!-- Seems to not be supported in Java 11...
+                       Replaced by SpotBugs in reporting plugins
+                       https://spotbugs.github.io/spotbugs-maven-plugin/usage.html
+           <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>findbugs-maven-plugin</artifactId>
+           </plugin>
+           -->
+
+           <plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>package_classes</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<appendAssemblyId>true</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/main/assembly/assembly-classes.xml</descriptor>
+							</descriptors>
+							<!-- This assembly can be skipped using profile property -->
+							<skipAssembly>${assembly.ui.classes.skip}</skipAssembly>
+						</configuration>
+					</execution>
+					<execution>
+						<id>package_widgets</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<appendAssemblyId>true</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/main/assembly/assembly-widgets.xml</descriptor>
+							</descriptors>
+							<!-- This assembly can be skipped using profile property -->
+							<skipAssembly>${assembly.ui.widgets.skip}</skipAssembly>
+						</configuration>
+					</execution>
+					<execution>
+						<id>package_zip</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/main/assembly/assembly-dist.xml</descriptor>
+							</descriptors>
+							<!-- This assembly can be skipped using profile property
+							<skipAssembly>${assembly.ui.all.skip}</skipAssembly> -->
+						</configuration>
+					</execution>
+					<execution>
+						<id>package_sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<appendAssemblyId>true</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/main/assembly/assembly-src.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!--
+            START NEW EXALEAD MAVEN PLUGINS GOALS
+            (starting from version 422.0.0)
+            -->
+
+			<!-- Build and install Mashup plugin
+					Documentation: https://docs.factory.exalead.com/exa-cv-package-maven-plugin/plugin-info.html
+			-->
+			<plugin>
+				<groupId>com.exalead.tools</groupId>
+				<artifactId>exa-cv-package-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>cv-build</id>
+						<goals>
+							<!-- Generates 'cvplugin.properties' descriptor file
+									Documentation: https://docs.factory.exalead.com/exa-cv-package-maven-plugin/mashup-descriptor-mojo.html
+							-->
+							<goal>mashup-descriptor</goal>
+							<!-- Installs CloudView Mashup UI plugin on CloudView instance
+                                 Mandatory properties :
+                                 - cv.instance.host : CloudView host name
+                                 - cv.instance.port : CloudView base port
+                                 Optional property :
+                                 - cv.application.id : target application name (default 'default')
+                                 Documentation: https://docs.factory.exalead.com/exa-cv-package-maven-plugin/mashup-install-mojo.html
+                            -->
+							<goal>mashup-install</goal>
+						</goals>
+						<inherited>true</inherited>
+						<configuration />
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Generate custom components reports
+                 use property "maven.cv-components-doc.skip=true" or "maven.cv-components-doc.report.skip=true" to skip
+                 Documentation: https://docs.factory.exalead.com/exa-cv-reports-maven-plugin/plugin-info.html
+             -->
+			<plugin>
+				<groupId>com.exalead.tools</groupId>
+				<artifactId>exa-cv-reports-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>cv-report</id>
+						<goals>
+							<!-- Generate custom components documentation
+									Documentation: https://docs.factory.exalead.com/exa-cv-reports-maven-plugin/cv-components-doc-mojo.html
+							-->
+							<goal>cv-components-doc</goal>
+						</goals>
+						<inherited>true</inherited>
+						<configuration />
+					</execution>
+				</executions>
+			</plugin>
+
+			<!--
+            END NEW EXALEAD MAVEN PLUGINS GOALS
+            -->
+
+			<!-- Replaced tag with cv-apps-parent 422.*
+			    Don't use anymore 'CVMavenPlugin' but smaller and more isolated and dedicated plugins
+			<plugin>
+				<groupId>com.exalead.tools</groupId>
+				<artifactId>CVMavenPlugin</artifactId>
+				<executions>
+					<execution>
+						<id>cv-build</id>
+						<goals>
+							<goal>CVMashupPluginDescriptorGenerator</goal>
+							<goal>CVPDFReport</goal>
+							<goal>CVMashupPluginInstaller</goal>
+						</goals>
+						<inherited>true</inherited>
+					</execution>
+				</executions>
+			</plugin>
+			-->
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pdf-plugin</artifactId>
+			</plugin>
+			
+			<!-- Release
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+            </plugin> -->
+		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/jlr-onepartTags</directory>
+				<includes>
+					<include>**.tld</include>
+				</includes>
+				<targetPath>META-INF/tld</targetPath>
+			</resource>
+		</resources>
+	</build>
+
+	<dependencies>
+		<!-- Access SDK dependencies -->
+        <dependency>
+            <groupId>${cv.groupid}</groupId>
+            <artifactId>access-sdk</artifactId>
+            <type>pom</type>
+        </dependency>
+
+        <!-- MUI SDK dependencies -->
+        <dependency>
+            <groupId>${cv.groupid}</groupId>
+            <artifactId>mashup-ui-sdk</artifactId>
+            <type>pom</type>
+        </dependency>
+		
+		<!-- ToolBox -->
+
+		<dependency>
+			<groupId>com.exalead.tools</groupId>
+			<artifactId>CloudViewToolBox</artifactId>
+		</dependency>		
+	</dependencies>
+</project>

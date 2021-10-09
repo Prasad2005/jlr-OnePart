@@ -1,0 +1,24 @@
+<ConsolidationMerger profileTransformation="false" profileAggregation="false"
+                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                           xsi:noNamespaceSchemaLocation="../xsd/ConsolidationMergerConfig.xsd">
+    <!-- Ignore or set config ID for consolidation config -->
+    <!--
+    <config name="cc0_standard" mode="ignore"/>
+    <config fromConfig="config2" name="cc0_standard" mode="override"/>
+    -->
+    <!-- Overrides processors by dependency ones if name starts with application name (recommended) -->
+    <!--
+    <processors>
+        <processor fromConfig="[APP_NAME]-app" mode="override" name="$[APP_NAME]_.*"/>
+        <processor mode="ignore" name="[APP_NAME]_.*"/>
+    </processors>
+    -->
+    <!-- Forward rules merge config
+    <forwards trigger="false" papi="bg0" >
+        <rule name="test_doc" mode="ignore"/>
+    </forwards>
+	-->
+    <!-- Consolidation triggers config names
+    <triggers commit="mainconfig" aggregation="mainconfig"/>
+    -->
+</ConsolidationMerger>

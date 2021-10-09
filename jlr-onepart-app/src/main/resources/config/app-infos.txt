@@ -1,0 +1,7 @@
+GroupID --> ${project.groupId}
+ArtifactID --> ${project.artifactId}
+Version --> ${project.version}
+Revision --> ${buildNumber}
+Date --> ${timestamp}
+
+${project.description}

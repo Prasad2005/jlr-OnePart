@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<Widget name="Paginated Facet List" group="Navigation/Facet Panel" premium="true">
+
+	<Description>Displays a list of categories for a given facet.</Description>
+	
+	<Preview>
+		<![CDATA[
+			<img src="/resources/widgets/facetingList/img/preview.png" alt="Paginated Facet List" />
+		]]>
+	</Preview>
+		
+	<Includes>
+		<Include type="css" path="/resources/css/exa/common.less" />
+		<Include type="css" path="/resources/css/exa/pagination.less" />
+		<Include type="css" path="css/style.less" />
+		<Include type="js" path="/resources/javascript/exa/ui/Input.js" />
+ 		<Include type="js" path="/resources/javascript/exa/dom.js" />
+ 		<Include type="js" path="/resources/javascript/exa/ui/Button.js" />
+ 		<Include type="js" path="/resources/javascript/exa/ui/Component.js" />
+  		<Include type="js" path="js/Pagination.js" />
+ 		<Include type="js" path="js/list.js" />
+		<Include type="js" path="../jlr-onepartCommonResources/javascript/refines.js" />
+	</Includes>
+
+	<Platforms>
+		<Platform type="web" supported="true" />
+		<Platform type="mobile" supported="true" />
+	</Platforms>
+
+	<SupportWidgetsId arity="ZERO" />
+	<SupportFeedsId arity="MANY" />
+	
+	<OptionsGroup name="General">
+		<Option id="facetId" name="Facet" arity="ONE">
+			<Description>Specifies the facet that will be used to populate the list.</Description>
+			<Functions>
+				<ContextMenu>Facets()</ContextMenu>
+			</Functions>
+		</Option>
+		<Option id="sortMode" name="Sort categories by" arity="ONE">
+			<Description>
+				<![CDATA[
+					Sorts the categories using the selected method. Selecting anything but 'default' impacts performance.<br />
+					<ul>
+						<li>'default' requires no processing.</li>
+						<li>'shuffle', 'desc*', 'score*', 'count*' and 'range*' impact performance on the client side.</li>
+					</ul>
+				]]>
+			</Description>
+			<Values>
+				<Value>default</Value>
+				<Value>description-asc</Value>
+				<Value>description-desc</Value>
+				<Value>score-asc</Value>
+				<Value>score-desc</Value>
+				<Value>count-asc</Value>
+				<Value>count-desc</Value>
+				<Value>range-asc</Value>
+				<Value>range-desc</Value>
+				<Value>shuffle</Value>
+			</Values>
+		</Option>
+		<Option id="aggregation" name="Aggregation" arity="ZERO_OR_ONE">
+			<Description>Specifies the type of aggregation that will be displayed next to the facet name.</Description>
+			<Functions>
+				<ContextMenu>Aggregations("facetId")</ContextMenu>
+				<ContextMenu>COMMON_emptyOnChange()</ContextMenu>
+			</Functions>
+		</Option>
+		<Option id="enablePagination" name="Enable pagination" arity="ONE">
+			<Values>
+				<Value>false</Value>
+				<Value>true</Value>
+			</Values>
+			<Functions>
+				<Display>ToggleDisplay({ valueToMatch: 'false', hideOptions: ['paginationSize']})</Display>
+			</Functions>
+		</Option>
+		<Option id="paginationSize" name="Pagination size" arity="ONE">
+			<Description>Specifies the number of categories displayed per page.</Description>
+		</Option>
+		<Option id="foldUnrefined" name="Fold" arity="ZERO_OR_ONE">
+			<Description>Fold facet when no refine is made</Description>
+			<Values>
+				<Value>false</Value>
+				<Value>true</Value>
+			</Values>
+		</Option>
+		<Option id="enableFiltering" name="Enable filtering" arity="ONE">
+			<Description>Displays an input field to filter categories.</Description>
+			<Values>
+				<Value>false</Value>
+				<Value>true</Value>
+			</Values>
+		</Option>
+		<Option id="sourcePage" name="Source Page" arity="ONE">
+			<Description>Specifies the page where source feed is defined.</Description>
+			<Functions>
+				<ContextMenu>Pages()</ContextMenu>
+			</Functions>
+		</Option>
+		<Option id="sourceFeed" name="Source Feed" arity="ONE">
+			<Description>Specifies the source feed name.</Description>
+		</Option>		
+		<Option id="localFeed" name="Local Feed" arity="ONE">
+			<Description>Specifies the local feed name.</Description>
+			<Functions>
+				<ContextMenu>Feeds()</ContextMenu>
+			</Functions>
+		</Option>		
+	</OptionsGroup>
+	
+	<OptionsGroup name="Advanced">
+		<Option id="noResultsJspPathHit" name="JSP path to use if no results" arity="ONE">
+			<Description>If there are no results, the widget is either hidden using a trigger, or a message is displayed using the content of a JSP file.</Description>
+			<Functions>
+				<Check>isJspPath</Check>
+			</Functions>
+			<Values>
+				<Value>/WEB-INF/jsp/commons/noFacets.jsp</Value>
+			</Values>
+		</Option>
+		<Option id="forceRefineOnFeeds" name="Force refinement for feeds" arity="ZERO_OR_MANY">
+			<Description>Forces refinements on the specified feeds.</Description>
+			<Functions>
+				<ContextMenu>Feeds()</ContextMenu>
+				<ContextMenu>COMMON_emptyOnChange()</ContextMenu>
+			</Functions>
+		</Option>
+	</OptionsGroup>
+	
+	<DefaultValues>
+		<DefaultValue name="enablePagination">true</DefaultValue>
+		<DefaultValue name="paginationSize">10</DefaultValue>
+	</DefaultValues>
+</Widget>

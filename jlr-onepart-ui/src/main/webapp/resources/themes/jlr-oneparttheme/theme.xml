@@ -1,0 +1,34 @@
+<MashupTheme displayName="jlr-onepart Search">
+	<Includes>
+		<Include type="css" path="css/theme.less" />
+	</Includes>
+
+	<Options>
+		<Option value="cbody-bg###FFFFFF##page BG" name="vars"></Option>
+		<Option value="ctext###333333##text color" name="vars"></Option>
+		<Option value="ctext-bold##@ctext - #111##unused" name="vars"></Option>
+		<Option value="ctext-weak##@ctext + #222##facets" name="vars"></Option>
+		<Option value="ctext-weaker##@ctext + #444##metas" name="vars"></Option>
+		<Option value="ctext-inverted###FFFFFF##inverted text color" name="vars"></Option>
+		<Option value="cblock###222222##unused" name="vars"></Option>
+		<Option value="cblock-bg###FFFFFF##W BG content" name="vars"></Option>
+		<Option value="cblock-bg-alt##@cblock + #CECECE##W BG secondary" name="vars"></Option>
+		<Option value="cblock-border##@cblock + #AAA##W borders" name="vars"></Option>
+		<Option value="cblock-border-alt###CCC##W borders secondary" name="vars"></Option>
+		<Option value="cmeta###43A07D##unused" name="vars"></Option>
+		<Option value="cblock-text###000000##unused" name="vars"></Option>
+		<Option value="clink###1E69A2##links" name="vars"></Option>
+		<Option value="clink-active###e54b00##links" name="vars"></Option>
+		<Option value="clink-bg-active###f5f5f5##links" name="vars"></Option>
+		<Option value="clink-hover###e54b00##links" name="vars"></Option>
+		<Option value="clink-bg-hover###fafafa##links" name="vars"></Option>
+		<Option value="cicon###333##icons" name="vars"></Option>
+		<Option value="line-height##20px##" name="vars"></Option>
+		<Option value="m-font##13px##" name="vars"></Option>
+		<Option value="xs-font##9px##" name="vars"></Option>
+		<Option value="s-font##11px##" name="vars"></Option>
+		<Option value="l-font##15px##" name="vars"></Option>
+		<Option value="xl-font##17px##" name="vars"></Option>
+		<Option value="xxl-font##19px##" name="vars"></Option>
+	</Options>
+</MashupTheme>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:annotation>
+        <xs:documentation>Generic elements merger configuration, use to merge XML elements by names</xs:documentation>
+    </xs:annotation>
+
+    <xs:include schemaLocation="CommonTypes.xsd"/>
+
+    <xs:element name="GenericElementsMerger" type="GenericElementsMergerConfig"/>
+
+    <xs:complexType name="GenericElementsMergerConfig">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="genericElements"
+                        type="genericElements"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="genericElements">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="genericElement"
+                        type="genericElement"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" default="default"/>
+    </xs:complexType>
+
+    <xs:complexType name="genericElement">
+        <xs:attribute name="fromConfig" type="xs:string" use="optional"/>
+        <xs:attribute name="mode" type="Mode"/>
+        <xs:attribute name="name" type="xs:string"/>
+    </xs:complexType>
+</xs:schema>

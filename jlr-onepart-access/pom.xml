@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.exalead.customers.jlr.onepart</groupId>
+		<artifactId>jlr-onepart</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jlr-onepart-access</artifactId>
+	<packaging>jar</packaging>
+
+	<name>jlr-onepart-access</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<!-- Properties used in cvplugin.properties -->
+		<cv.plugin.type>mashup</cv.plugin.type>
+		<cv.plugin.description>Custom Mashup components (Feed, Feed triggers, Serializers...)</cv.plugin.description>
+		<!-- Generate site index page with components overview -->
+		<maven.cv-components-doc.overview.index>true</maven.cv-components-doc.overview.index>
+	</properties>
+
+	<build>
+		<finalName>${project.name}</finalName>
+		
+		<plugins>
+			<!-- Update classpath -->
+            <plugin>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
+
+            <!-- Compile -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <!-- Test -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+
+            <!-- Code style -->
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+
+            <!-- Code validation -->
+            <plugin>
+                <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+
+            <!-- Seems to not be supported in Java 11...
+                       Replaced by SpotBugs in reporting plugins
+                       https://spotbugs.github.io/spotbugs-maven-plugin/usage.html
+           <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>findbugs-maven-plugin</artifactId>
+           </plugin>
+           -->
+
+           <plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+
+            <!-- Generate and attach sources jar -->
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+
+            <!--
+            START NEW EXALEAD MAVEN PLUGINS GOALS
+            (starting from version 422.0.0)
+            -->
+
+            <!-- Build and install Mashup plugin
+                    Documentation: https://docs.factory.exalead.com/exa-cv-package-maven-plugin/plugin-info.html
+            -->
+            <plugin>
+                <groupId>com.exalead.tools</groupId>
+                <artifactId>exa-cv-package-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>cv-build</id>
+                        <goals>
+                            <!-- Generates 'cvplugin.properties' descriptor file
+                                    Documentation: https://docs.factory.exalead.com/exa-cv-package-maven-plugin/access-descriptor-mojo.html
+                            -->
+                            <goal>access-descriptor</goal>
+                            <!-- Installs CloudView Access API plugin on CloudView instance
+                                 Mandatory properties :
+                                 - cv.instance.host : CloudView host name
+                                 - cv.instance.port : CloudView base port
+                                 Optional property :
+                                 - cv.application.id : target application name (default 'default')
+                                 Documentation: https://docs.factory.exalead.com/exa-cv-package-maven-plugin/mashup-install-mojo.html
+                            -->
+                            <goal>mashup-install</goal>
+                        </goals>
+                        <inherited>true</inherited>
+                        <configuration />
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Generate custom components reports
+                 use property "maven.cv-components-doc.skip=true" or "maven.cv-components-doc.report.skip=true" to skip
+                 Documentation: https://docs.factory.exalead.com/exa-cv-reports-maven-plugin/plugin-info.html
+             -->
+            <plugin>
+                <groupId>com.exalead.tools</groupId>
+                <artifactId>exa-cv-reports-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>cv-report</id>
+                        <goals>
+                            <!-- Generate custom components documentation
+                                    Documentation: https://docs.factory.exalead.com/exa-cv-reports-maven-plugin/cv-components-doc-mojo.html
+                            -->
+                            <goal>cv-components-doc</goal>
+                        </goals>
+                        <inherited>true</inherited>
+                        <configuration />
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+            END NEW EXALEAD MAVEN PLUGINS GOALS
+            -->
+
+			<!-- Replaced tag with cv-apps-parent 422.*
+			    Don't use anymore 'CVMavenPlugin' but smaller and more isolated and dedicated plugins
+            <plugin>
+                <groupId>com.exalead.tools</groupId>
+                <artifactId>CVMavenPlugin</artifactId>
+                <executions>
+                    <execution>
+						<id>cv-build</id>
+                        <goals>
+
+                            <goal>CVAccessPluginDescriptorGenerator</goal>
+                            <goal>CVMashupPluginInstaller</goal>
+							<goal>CVPDFReport</goal>
+                        </goals>
+                        <inherited>true</inherited>
+                        <configuration />
+                    </execution>
+                </executions>
+            </plugin> -->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pdf-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+			</plugin>
+			
+			 <!-- Release
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+            </plugin> -->
+		</plugins>
+	</build>
+
+	<dependencies>
+		 <!-- Access SDK dependencies -->
+        <dependency>
+            <groupId>${cv.groupid}</groupId>
+            <artifactId>access-sdk</artifactId>
+            <type>pom</type>
+        </dependency>
+		
+		<!-- ToolBox -->
+
+		<dependency>
+			<groupId>com.exalead.tools</groupId>
+			<artifactId>CloudViewToolBox</artifactId>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <body>
+        <menu name="Overview">
+            <item name="Project overview" href="index.html"/>
+            <item name="Project information" href="project-info.html"/>
+            <item name="Custom components" href="cv-classes-descriptors.html"/>
+            <item name="MEL functions" href="cv-melfunctions-descriptors.html"/>
+            <item name="Javadoc" href="apidocs/index.html"/>
+        </menu>
+
+        <menu name="ROOT project">
+            <item name="jlr-onepart root project" href="../jlr-onepart/index.html"/>
+        </menu>
+
+        <menu name="Related projects">
+            <item name="Core components" href="../jlr-onepart-core/index.html"/>
+            <item name="Access API components" href="../jlr-onepart-access/index.html"/>
+            <item name="Mashup UI components" href="../jlr-onepart-ui/index.html"/>
+            <!-- Uncomment when app reporting implemented
+            <item name="Common UI classes" href="../jlr-onepart-app/index.html"/>
+             -->
+        </menu>
+
+        <!--  Uncomment for manually written documentation
+        <menu name="Examples">
+            <item name="description1" href="examples/example-one.html"/>
+            <item name="description2" href="examples/example-two.html"/>
+        </menu>-->
+    </body>
+</project>

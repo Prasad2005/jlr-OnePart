@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<Widget name="jlr-onepart Common Resources" group="jlr-onepart">
+	<Description>jlr-onepart Common Resources</Description>
+	
+	<SupportI18N supported="true" />
+	
+	<Platforms>
+		<Platform type="web" supported="true" />
+		<Platform type="mobile" supported="false" />
+	</Platforms>
+
+	<SupportWidgetsId arity="ZERO" />
+	<SupportI18N supported="true" />
+</Widget>

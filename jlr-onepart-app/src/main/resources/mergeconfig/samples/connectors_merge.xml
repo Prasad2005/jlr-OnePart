@@ -1,0 +1,8 @@
+<ConnectorsMerger xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:noNamespaceSchemaLocation="../xsd/ConnectorsMergerConfig.xsd">
+    <connectors>
+		<!-- Sample of connectors name (pattern) coming from 'a39' config folder
+        <connector fromConfig="a39" name=".*-entities" mode="override" removeSchedules="true|false" removeFailureRestart="true|false" removeCommitTrigger="true|false"/> 
+		-->
+    </connectors>
+</ConnectorsMerger>

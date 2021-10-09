@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+
+	<description>jlr-onepart Mashup Widget Helpers</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>jlr-onepart</short-name>
+	<uri>http://www.exalead.com/jspapi/jlr-onepart</uri>
+
+	<tag>
+		<description>Format Exalead Date to a new Date format</description>
+		<name>exaleadDateFormater</name>
+		<tag-class>com.exalead.cv360.searchui.view.jspapi.custom.taglib.ExaleadDateFormater</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<description>date format</description>
+			<name>dateFormat</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>Value to transform.</description>
+			<name>metaValue</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>Result of the process</description>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<description>Returns the localized path for the category.</description>
+		<name>getCategoryPathLeaf</name>
+		<tag-class>com.exalead.cv360.searchui.view.jspapi.custom.taglib.CategoryGetPathLeaf</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>Name of the exported variable for the retrieved MergedCategory label.</description>
+			<name>var</name>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>The MergedCategory to retrieve label from.</description>
+			<name>category</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.exalead.access.feedapi.AbstractCategory</type>
+		</attribute>
+		<attribute>
+			<description>The MergedCategory path (Facet/Category) to use for the label.</description>
+			<name>categoryPath</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+
+</taglib>
